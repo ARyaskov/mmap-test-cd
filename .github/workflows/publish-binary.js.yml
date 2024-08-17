@@ -27,16 +27,23 @@ jobs:
       - name: Build binary
         run: npm run build
 
-      - name: Rename and Upload artifact
+      - name: Rename and package artifact
         run: |
           ABI_VERSION=$(node -p "process.versions.modules")
-          OS_SUFFIX=$([[ ${{ matrix.os }} == 'windows-latest' ]] && echo 'win32-x64' || ([[ ${{ matrix.os }} == 'ubuntu-latest' ]] && echo 'linux-x64' || echo 'darwin-x64'))
+          if [ ${{ matrix.os }} == 'windows-latest' ]; then
+            OS_SUFFIX="win32-x64"
+          elif [ ${{ matrix.os }} == 'ubuntu-latest' ]; then
+            OS_SUFFIX="linux-x64"
+          else
+            OS_SUFFIX="darwin-x64"
+          fi
           ARCHIVE_NAME="mmap_io-${{ github.ref_name }}-node-v${ABI_VERSION}-${OS_SUFFIX}.tar.gz"
           tar -czvf $ARCHIVE_NAME -C build/binding .
+          echo "ARCHIVE_NAME=${ARCHIVE_NAME}" >> $GITHUB_ENV
         shell: bash
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ github.ref_name }}-node-v${ABI_VERSION}-package
-          path: mmap_io-${{ github.ref_name }}-node-v${ABI_VERSION}-${OS_SUFFIX}.tar.gz
+          name: ${{ github.ref_name }}-node-v${{ matrix.node-version }}-package
+          path: ${{ env.ARCHIVE_NAME }}
