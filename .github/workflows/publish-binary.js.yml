@@ -30,7 +30,8 @@ jobs:
       - name: Rename and Upload artifact
         run: |
           ABI_VERSION=$(node -p "process.versions.modules")
-          ARCHIVE_NAME="mmap_io-${{ github.ref_name }}-node-v${ABI_VERSION}-${{ matrix.os == 'windows-latest' && echo 'win32-x64' || matrix.os == 'ubuntu-latest' && echo 'linux-x64' || matrix.os == 'macos-latest' && echo 'darwin-x64' }}.tar.gz"
+          OS_SUFFIX=$([[ ${{ matrix.os }} == 'windows-latest' ]] && echo 'win32-x64' || ([[ ${{ matrix.os }} == 'ubuntu-latest' ]] && echo 'linux-x64' || echo 'darwin-x64'))
+          ARCHIVE_NAME="mmap_io-${{ github.ref_name }}-node-v${ABI_VERSION}-${OS_SUFFIX}.tar.gz"
           tar -czvf $ARCHIVE_NAME -C build/binding .
         shell: bash
 
@@ -38,4 +39,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ github.ref_name }}-node-v${ABI_VERSION}-package
-          path: mmap_io-${{ github.ref_name }}-node-v${ABI_VERSION}-${{ matrix.os == 'windows-latest' && echo 'win32-x64' || matrix.os == 'ubuntu-latest' && echo 'linux-x64' || matrix.os == 'macos-latest' && echo 'darwin-x64' }}.tar.gz
+          path: mmap_io-${{ github.ref_name }}-node-v${ABI_VERSION}-${OS_SUFFIX}.tar.gz
