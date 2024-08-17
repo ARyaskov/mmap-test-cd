@@ -53,7 +53,7 @@ jobs:
           ARCHIVE_NAME="mmap_io-${{ github.ref_name }}-node-v${ABI_VERSION}-${OS_SUFFIX}.tar.gz"
           tar -czvf $ARCHIVE_NAME -C build/binding .
           echo "ARCHIVE_NAME=${ARCHIVE_NAME}" >> $GITHUB_ENV
-          shell: bash
+        shell: bash
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
