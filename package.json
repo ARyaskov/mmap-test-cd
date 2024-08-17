@@ -1,6 +1,6 @@
 {
-    "name": "@riaskov/mmap-io",
-    "version": "1.5.2",
+    "name": "@riaskov/mmap-test-cd",
+    "version": "1.5.3",
     "license": "MIT",
     "author": {
         "name": "Oscar Campbell",
@@ -22,10 +22,10 @@
         "module_path": "./build/binding/{configuration}/{node_abi}-{platform}-{arch}/",
         "remote_path": "./v{version}/",
         "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz",
-        "host": "https://github.com/ARyaskov/mmap-io/releases/download/"
+        "host": "https://github.com/ARyaskov/mmap-test-cd/releases/download/"
     },
     "description": "Node.js mmap bindings revisited.",
-    "homepage": "https://github.com/ARyaskov/mmap-io",
+    "homepage": "https://github.com/ARyaskov/mmap-test-cd",
     "keywords": [
         "low level",
         "file",
@@ -39,10 +39,10 @@
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/ARyaskov/mmap-io.git"
+        "url": "https://github.com/ARyaskov/mmap-test-cd.git"
     },
     "bugs": {
-        "url": "http://github.com/ARyaskov/mmap-io/issues"
+        "url": "http://github.com/ARyaskov/mmap-test-cd/issues"
     },
     "main": "mmap-io.js",
     "files": [
@@ -81,7 +81,7 @@
     },
     "devDependencies": {
         "@types/node": "^18.19.41",
-        "node-pre-gyp-github": "^1.4.6",
+        "node-pre-gyp-github": "^2.0.0",
         "typescript": "^5.5.3",
         "tsx": "^4.16.2"
     }
