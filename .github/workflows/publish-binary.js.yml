@@ -3,7 +3,7 @@ name: Publish Binaries
 on:
   push:
     tags:
-      - "v*.*.*"
+      - "*.*.*"
 
 jobs:
   build:
