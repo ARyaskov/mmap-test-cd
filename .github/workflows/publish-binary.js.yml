@@ -21,19 +21,13 @@ jobs:
         with:
           node-version: ${{ matrix['node-version'] }}
 
-      - name: Install Python and distutils on Linux
-        run: |
-          sudo apt-get update
-          sudo apt-get install python3-distutils -y
-        if: runner.os == 'Linux'
-
-      - name: Setup Python environment on macOS
+      - name: Setup Python 3.11 on macOS
         if: runner.os == 'macOS'
         run: |
-          python3 -m venv venv
+          python3.11 -m venv venv
           source venv/bin/activate
-          python3 -m ensurepip --upgrade
-          python3 -m pip install distutils
+          python3.11 -m ensurepip --upgrade
+        shell: bash
 
       - name: Install dependencies
         run: npm install
