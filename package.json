@@ -81,7 +81,7 @@
     },
     "devDependencies": {
         "@types/node": "^18.19.41",
-        "node-pre-gyp-github": "^1.4.6",
+        "node-pre-gyp-github": "^2.0.0",
         "typescript": "^5.5.3",
         "tsx": "^4.16.2"
     }

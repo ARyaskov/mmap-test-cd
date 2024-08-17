@@ -67,5 +67,5 @@ jobs:
 
       - name: Push binaries
         env:
-          NODE_PRE_GYP_GITHUB_TOKEN: ${{ secrets.PUSH_RELEASE_TOKEN }}
+          NODE_PRE_GYP_GITHUB_TOKEN: ${{ secrets.NODE_PRE_GYP_GITHUB_TOKEN }}
         run: npm run push-binary
