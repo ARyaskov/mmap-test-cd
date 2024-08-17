@@ -1,6 +1,6 @@
 {
     "name": "@riaskov/mmap-test-cd",
-    "version": "1.5.3",
+    "version": "1.5.4",
     "license": "MIT",
     "author": {
         "name": "Oscar Campbell",
@@ -68,7 +68,7 @@
         "install": "npm run build-addon",
         "build-binary-x64": "node-pre-gyp rebuild && node-pre-gyp package",
         "build-binary-x86": "node-pre-gyp rebuild --target_arch=ia32 && node-pre-gyp package --target_arch=ia32",
-        "push-binary": "node-pre-gyp-github publish",
+        "push-binary": "node-pre-gyp-github publish --release",
         "test": "tsx src/test.ts",
         "watch": "while true; do (npm run build; inotifywait -qre close_write,moved_to --exclude '\\.git' ./src/; ) done;"
     },
