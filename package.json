@@ -1,6 +1,6 @@
 {
     "name": "@riaskov/mmap-io",
-    "version": "1.5.1",
+    "version": "1.5.2",
     "license": "MIT",
     "author": {
         "name": "Oscar Campbell",
@@ -81,7 +81,7 @@
     },
     "devDependencies": {
         "@types/node": "^18.19.41",
-        "node-pre-gyp-github": "^2.0.0",
+        "node-pre-gyp-github": "^1.4.6",
         "typescript": "^5.5.3",
         "tsx": "^4.16.2"
     }
