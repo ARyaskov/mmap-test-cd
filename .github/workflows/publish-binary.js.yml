@@ -21,6 +21,18 @@ jobs:
         with:
           node-version: ${{ matrix['node-version'] }}
 
+      - name: Install Python and distutils
+        run: |
+          sudo apt-get update
+          sudo apt-get install python3-distutils -y
+        if: runner.os == 'Linux'
+
+      - name: Install Python and distutils on macOS
+        run: |
+          python3 -m ensurepip --upgrade
+          python3 -m pip install distutils
+        if: runner.os == 'macOS'
+
       - name: Install dependencies
         run: npm install
 
@@ -45,5 +57,5 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ github.ref_name }}-node-v${{ matrix.node-version }}-package
+          name: ${{ github.ref_name }}-node-v${ABI_VERSION}-package
           path: ${{ env.ARCHIVE_NAME }}
