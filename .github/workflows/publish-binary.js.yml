@@ -27,23 +27,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
 
       - name: Add msbuild to PATH (Windows)
         if: matrix.build-type.os == 'windows-latest'
         uses: microsoft/setup-msbuild@v2
         with:
           vs-version: '[18.0)'
-
-      # Clean install and generate fresh lock file
-      - name: Clean npm cache
-        run: npm cache clean --force
-
-      - name: Remove existing lock file
-        run: rm -f package-lock.json
-
-      - name: Install dependencies and generate lock file
-        run: npm install
 
       # Configure node-gyp with exceptions enabled
       - name: Configure node-gyp
