@@ -18,7 +18,7 @@ jobs:
           {os: "macos-latest", arch: "arm64"},
           {os: "windows-latest", arch: "x64"}
         ]
-        node-version: [18.x]
+        node-version: [18.x, 20.x]
 
     steps:
       - uses: actions/checkout@v4
@@ -27,6 +27,16 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Set Yarn Version
+        run: yarn set version 4.0.2
+
+      - name: Install Dependencies
+        run: |
+          yarn
 
       - name: Add msbuild to PATH (Windows)
         if: matrix.build-type.os == 'windows-latest'
@@ -39,26 +49,33 @@ jobs:
         shell: bash
         run: |
           echo '{"cflags_cc": ["-fexceptions"]}' > binding.gyp.json
-          cat binding.gyp.json
+
+      - name: Clean build
+        run: yarn clean
 
       - name: Build TypeScript
-        run: npm run build-es
+        run: yarn tsc
+
+      - name: Copy type definitions
+        shell: bash
+        run: |
+          mkdir -p dist
+          cp mmap-io.d.ts dist/
+          cp dist/mmap-io.d.ts ./
 
       # Build with exceptions enabled
       - name: Build binary
         shell: bash
         run: |
           export CXXFLAGS="-fexceptions"
-          npm run build-addon
+          yarn build-addon
 
       - name: Package binary
         env:
           NODE_PRE_GYP_GITHUB_TOKEN: ${{ secrets.NODE_PRE_GYP_GITHUB_TOKEN }}
-        run: |
-          npm run package-binary
+        run: yarn package-binary
 
       - name: Push binary
         env:
           NODE_PRE_GYP_GITHUB_TOKEN: ${{ secrets.NODE_PRE_GYP_GITHUB_TOKEN }}
-        run: |
-          npm run push-binary
+        run: yarn push-binary
