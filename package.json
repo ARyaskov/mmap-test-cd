@@ -1,22 +1,14 @@
 {
     "name": "@riaskov/mmap-test-cd",
-    "version": "1.5.6",
+    "version": "2.0.0",
     "license": "MIT",
     "author": {
-        "name": "Oscar Campbell",
-        "email": "oscar@campbell.nu",
-        "url": "https://github.com/ozra"
+        "name": "Andrei Riaskov",
+        "email": "code@riaskov.com"
     },
-    "contributors": [
-        {
-          "name": "Nick Johnstone",
-          "url": "https://github.com/Widdershin"
-        },
-        {
-          "name": "Andrei Riaskov",
-          "email": "code@riaskov.com"
-        }
-    ],
+    "engines": {
+        "node": ">=16"
+    },
     "binary": {
         "module_name": "mmap_io",
         "module_path": "./build/binding/{configuration}/{node_abi}-{platform}-{arch}/",
@@ -24,8 +16,8 @@
         "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz",
         "host": "https://github.com/ARyaskov/mmap-test-cd/releases/download/"
     },
-    "description": "Node.js mmap bindings revisited.",
-    "homepage": "https://github.com/ARyaskov/mmap-test-cd",
+    "description": "Node.js mmap bindings via N-API",
+    "homepage": "https://github.com/ARyaskov/mmap-test-cd/",
     "keywords": [
         "low level",
         "file",
@@ -57,8 +49,7 @@
         "src"
     ],
     "scripts": {
-        "clean": "rm -rf build dist",
-        "build": "npm run build-addon && npm run build-es",
+        "build": "npm run clean && npm run build-addon && npm run build-es",
         "build-addon": "node-pre-gyp install --fallback-to-build",
         "build-es": "run-script-os",
         "build-es:win32": "tsc && copy .\\dist\\mmap-io.d.ts .\\",
@@ -68,21 +59,28 @@
         "install": "npm run build-addon",
         "build-binary-x64": "node-pre-gyp rebuild && node-pre-gyp package",
         "build-binary-x86": "node-pre-gyp rebuild --target_arch=ia32 && node-pre-gyp package --target_arch=ia32",
-        "push-binary": "node-pre-gyp-github publish --release",
-        "test": "tsx src/test.ts",
-        "watch": "while true; do (npm run build; inotifywait -qre close_write,moved_to --exclude '\\.git' ./src/; ) done;"
+        "push-binary": "node-pre-gyp-github publish",
+        "clean": "rimraf dist",
+        "test": "npm run build && mocha 'test/**/*.js'",
+        "test:watch": "npm run build && mocha 'test/**/*.js' --watch --watch-files src/,test/",
+        "watch": "while true; do (npm run build; inotifywait -qre close_write,moved_to --exclude '\\.git' ./src/; ) done;",
+        "format": "prettier --write \"src/**/*.ts\" \"test/**/*.js\" *.js *.d.ts"
     },
     "dependencies": {
-        "@mapbox/node-pre-gyp": "^1.0.11",
-        "errno": "*",
-        "nan": "^2.20.0",
-        "node-gyp": "^10.2.0",
-        "run-script-os": "^1.1.6"
+        "@mapbox/node-pre-gyp": "1.0.11",
+        "node-addon-api": "8.3.0",
+        "run-script-os": "1.1.6"
     },
     "devDependencies": {
-        "@types/node": "^18.19.41",
-        "node-pre-gyp-github": "^2.0.0",
-        "typescript": "^5.5.3",
-        "tsx": "^4.16.2"
+        "@riaskov/node-pre-gyp-github": "^3.0.0",
+        "@types/chai": "^5.0.1",
+        "@types/mocha": "^10.0.10",
+        "@types/node": "^22.10.1",
+        "chai": "^4.5.0",
+        "mocha": "^10.8.2",
+        "ts-node": "^10.9.2",
+        "tsconfig-paths": "^4.2.0",
+        "tsx": "^4.19.2",
+        "typescript": "5.7.2"
     }
 }
