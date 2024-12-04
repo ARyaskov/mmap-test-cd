@@ -1,37 +1,24 @@
-const binary = require('@mapbox/node-pre-gyp');
-const path = require('path');
-const binding_path = binary.find(path.resolve(path.join(__dirname,'../package.json')));
-const mmap_lib_raw_ = require(binding_path);
+import path from "path"
+
+const binary = require("@mapbox/node-pre-gyp")
+const binding_path = binary.find(
+    path.resolve(path.join(__dirname, "../package.json")),
+)
+const mmap_lib_raw_ = require(binding_path)
 
 type FileDescriptor = number
 
-type MapProtectionFlags =
-    | MmapIo["PROT_NONE"] // 0
-    | MmapIo["PROT_READ"] // 1
-    | MmapIo["PROT_WRITE"] // 2
-    | MmapIo["PROT_EXEC"] // 4
-    | 3 // R+W
-    | 5 // R+X
-    | 6 // W+X
-    | 7 // R+W+X
+export type MapProtectionFlags =
+    | MmapIo["PROT_NONE"]
+    | MmapIo["PROT_READ"]
+    | MmapIo["PROT_WRITE"]
+    | MmapIo["PROT_EXEC"]
+    | 3 // PROT_READ | PROT_WRITE
+    | 5 // PROT_READ | PROT_EXEC
+    | 6 // PROT_WRITE | PROT_EXEC
+    | 7 // PROT_READ | PROT_WRITE | PROT_EXEC
 
-// making `map` a wrapper around the C++ `map`-implementation and allowing an
-// array of flags would be clean, perfectly literally typed, and the dirtier
-// binary-or can be done in the wrapper.
-//
-// type MapProtectionFlagsList = Array<
-//     | MmapIo["PROT_NONE"]
-//     | MmapIo["PROT_READ"]
-//     | MmapIo["PROT_WRITE"]
-//     | MmapIo["PROT_EXEC"]
-// >
-
-type MapFlags =
-    | MmapIo["MAP_PRIVATE"]
-    | MmapIo["MAP_SHARED"]
-    | MmapIo["MAP_NONBLOCK"]
-    | MmapIo["MAP_POPULATE"]
-    | number
+type MapFlags = MmapIo["MAP_PRIVATE"] | MmapIo["MAP_SHARED"] | number
 
 type MapAdvise =
     | MmapIo["MADV_NORMAL"]
@@ -48,33 +35,26 @@ type MmapIo = {
         fd: FileDescriptor,
         offset?: number,
         advise?: MapAdvise,
-        name?: Buffer
-    ): SharedArrayBuffer
+        name?: Buffer,
+    ): Buffer
 
     advise(
         buffer: Buffer,
         offset: number,
         length: number,
-        advise: MapAdvise
+        advise: MapAdvise,
     ): void
     advise(buffer: Buffer, advise: MapAdvise): void
-
-    /// Returns tuple of [ unmapped-pages-count, mapped-pages-count ]
-    incore(buffer: Buffer): [number, number]
 
     sync(
         buffer: Buffer,
         offset?: number,
         size?: number,
         blocking_sync?: boolean,
-        invalidate_pages?: boolean
+        invalidate_pages?: boolean,
     ): void
 
-    sync(
-        buffer: Buffer,
-        blocking_sync: boolean,
-        invalidate_pages?: boolean
-    ): void
+    sync(buffer: Buffer, blocking_sync: boolean, invalidate_pages?: boolean): void
 
     readonly PROT_READ: 1
     readonly PROT_WRITE: 2
@@ -89,24 +69,22 @@ type MmapIo = {
     readonly MADV_SEQUENTIAL: 2
     readonly MADV_WILLNEED: 3
     readonly MADV_DONTNEED: 4
-
     readonly PAGESIZE: number
 }
 
-// snatch the raw C++-sync func
+// Getting sync function from the native module
 const raw_sync_fn_ = mmap_lib_raw_.sync_lib_private__
 
-// Hide the original C++11 func from users
+// Hide the original C++ function from users
 delete mmap_lib_raw_.sync_lib_private__
 
-// Take care of all the param juggling here instead of in C++ code, by making
-// some overloads, and doing some argument defaults /ozra
-mmap_lib_raw_.sync = function(
+// Create a wrapper for sync function with improved parameter handling
+mmap_lib_raw_.sync = function (
     buf: Buffer,
-    par_a?: any,
-    par_b?: any,
-    par_c?: any,
-    par_d?: any
+    par_a?: number | boolean,
+    par_b?: number | boolean,
+    par_c?: boolean,
+    par_d?: boolean,
 ): void {
     if (typeof par_a === "boolean") {
         raw_sync_fn_(buf, 0, buf.length, par_a, par_b || false)
@@ -116,13 +94,10 @@ mmap_lib_raw_.sync = function(
             par_a || 0,
             par_b || buf.length,
             par_c || false,
-            par_d || false
+            par_d || false,
         )
     }
 }
 
-// mmap_lib_raw_.sync = sync_
-
 const mmap = mmap_lib_raw_ as MmapIo
-module.exports = mmap
 export default mmap
