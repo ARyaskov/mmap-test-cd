@@ -51,17 +51,17 @@
     "scripts": {
         "build": "yarn build-addon && yarn build-es",
         "build-es": "yarn tsc && cp ./dist/mmap-io.d.ts ./",
-        "build-addon": "node-pre-gyp rebuild",
-        "package-binary": "node-pre-gyp package",
-        "push-binary": "node-pre-gyp-github publish",
-        "preinstall": "node-pre-gyp install --fallback-to-build",
+        "build-addon": "yarn node-pre-gyp rebuild",
+        "package-binary": "yarn node-pre-gyp package",
+        "push-binary": "yarn node-pre-gyp-github publish",
+        "postinstall": "npx node-pre-gyp install --fallback-to-build",
         "clean": "rimraf dist",
         "format": "prettier --write \"src/**/*.ts\" \"test/**/*.js\" *.js *.d.ts",
         "test": "npm run build && mocha 'test/**/*.js'"
     },
     "packageManager": "yarn@4.0.2",
     "dependencies": {
-        "@mapbox/node-pre-gyp": "1.0.11",
+        "@mapbox/node-pre-gyp": "1.1.0-dev.1",
         "node-addon-api": "8.3.0",
         "run-script-os": "1.1.6"
     },
@@ -73,6 +73,7 @@
         "chai": "^4.5.0",
         "mocha": "^10.8.2",
         "npx": "^10.2.2",
+        "node-gyp": "^11.0.0",
         "ts-node": "^10.9.2",
         "tsconfig-paths": "^4.2.0",
         "tsx": "^4.19.2",
