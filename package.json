@@ -50,7 +50,7 @@
     ],
     "scripts": {
         "build": "yarn build-addon && yarn build-es",
-        "build-es": "yarn tsc && cp ./dist/mmap-io.d.ts ./",
+        "build-es": "yarn tsc && cpx ./dist/mmap-io.d.ts ./",
         "build-addon": "yarn node-pre-gyp rebuild",
         "package-binary": "yarn node-pre-gyp package",
         "push-binary": "yarn node-pre-gyp-github publish",
@@ -71,6 +71,7 @@
         "@types/mocha": "^10.0.10",
         "@types/node": "^22.10.1",
         "chai": "^4.5.0",
+        "cpx": "^1.5.0",
         "mocha": "^10.8.2",
         "node-gyp": "^11.0.0",
         "npx": "^10.2.2",

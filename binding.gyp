@@ -45,9 +45,16 @@
             }]
         ]
     }, {
-           "target_name": "action_after_build",
-           "module_name": "mmap_io",
-           "type": "none",
-           "dependencies": ["mmap_io"]
-       }]
+        "target_name": "action_after_build",
+        "type": "none",
+        "dependencies": ["mmap_io"],
+        "copies": [{
+            "files": ["<(PRODUCT_DIR)/mmap_io.node"],
+            "destination": "<(module_path)"
+        }]
+    }],
+    "variables": {
+        "module_path": "<(module_root_dir)/build/binding/Release/<(target_arch)-<(OS)/",
+        "module_name": "mmap_io"
+    }
 }
