@@ -68,12 +68,12 @@ jobs:
           cp mmap-io.d.ts dist/
           cp dist/mmap-io.d.ts ./
 
-      # Build with exceptions enabled
-      - name: Build binary
-        shell: bash
-        run: |
-          export CXXFLAGS="-fexceptions"
-          yarn build-addon
+#      # Build with exceptions enabled
+#      - name: Build binary
+#        shell: bash
+#        run: |
+#          export CXXFLAGS="-fexceptions"
+#          yarn build-addon
 
       - name: Package binary
         env:
