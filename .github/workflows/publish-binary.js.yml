@@ -13,11 +13,13 @@ jobs:
       max-parallel: 4
       matrix:
         build-type: [
-   
-          {os: "ubuntu-latest", arch: "arm64"},
-      
+          {os: "windows-2019", arch: "amd64"},
+          {os: "ubuntu-20.04", arch: "amd64"},
+          {os: "ubuntu-20.04", arch: "arm64"},
+          {os: "macos-12", arch: "amd64"}, # Monterey
+          {os: "macos-12", arch: "arm64"}, # Monterey
         ]
-        node-version: [20.x]
+        node-version: [16.x, 17.x, 18.x, 19.x, 20.x, 21.x, 22.x, 23.x]
 
     steps:
       - uses: actions/checkout@v4
@@ -42,10 +44,10 @@ jobs:
           yarn
 
       - name: Add msbuild to PATH (Windows)
-        if: matrix.build-type.os == 'windows-latest'
+        if: matrix.build-type.os == 'windows-2019'
         uses: microsoft/setup-msbuild@v2
         with:
-          vs-version: '[18.0)'
+          msbuild-architecture: x64
 
       # Configure node-gyp with exceptions enabled
       - name: Configure node-gyp
