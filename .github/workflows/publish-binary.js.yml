@@ -67,6 +67,10 @@ jobs:
           cp mmap-io.d.ts dist/
           cp dist/mmap-io.d.ts ./
 
+      - name: Run tests
+        run: |
+          yarn test
+
       - name: Package binary
         env:
           NODE_PRE_GYP_GITHUB_TOKEN: ${{ secrets.NODE_PRE_GYP_GITHUB_TOKEN }}
