@@ -45,13 +45,9 @@
             }]
         ]
     }, {
-        "target_name": "action_after_build",
-        "module_name": "mmap_io",
-        "type": "none",
-        "dependencies": ["mmap_io"],
-        "copies": [{
-            "files": ["<(PRODUCT_DIR)/mmap_io.node"],
-            "destination": "real"
-        }]
-    }]
+           "target_name": "action_after_build",
+           "module_name": "mmap_io",
+           "type": "none",
+           "dependencies": ["mmap_io"]
+       }]
 }
