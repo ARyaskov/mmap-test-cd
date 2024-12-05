@@ -26,7 +26,7 @@ Value NodeMmap(const CallbackInfo& info) {
 
     // Anon mode
     if (fd == -1) {
-        flags |= MAP_ANON; // or MAP_ANONYMOUS
+        flags |= MAP_ANONYMOUS;
     }
 
     void* data = mmap(nullptr, size, protection, flags, fd, offset);
