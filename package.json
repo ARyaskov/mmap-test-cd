@@ -1,13 +1,13 @@
 {
     "name": "@riaskov/mmap-test-cd",
-    "version": "2.0.8",
+    "version": "2.0.9",
     "license": "MIT",
     "author": {
         "name": "Andrei Riaskov",
         "email": "code@riaskov.com"
     },
     "engines": {
-        "node": ">=18.17"
+        "node": ">=16.14"
     },
     "binary": {
         "module_name": "mmap_io",
@@ -16,7 +16,7 @@
         "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz",
         "host": "https://github.com/ARyaskov/mmap-test-cd/releases/download/"
     },
-    "description": "Node.js mmap bindings via N-API",
+    "description": "Node.js mmap bindings",
     "homepage": "https://github.com/ARyaskov/mmap-test-cd/",
     "keywords": [
         "low level",
@@ -62,7 +62,7 @@
     "packageManager": "yarn@4.0.2",
     "dependencies": {
         "@mapbox/node-pre-gyp": "1.1.0-dev.1",
-        "node-addon-api": "8.3.0",
+        "nan": "^2.22.0",
         "run-script-os": "1.1.6"
     },
     "devDependencies": {
@@ -75,6 +75,7 @@
         "mocha": "^10.8.2",
         "node-gyp": "^11.0.0",
         "npx": "^10.2.2",
+        "prettier": "^3.4.2",
         "ts-node": "^10.9.2",
         "tsconfig-paths": "^4.2.0",
         "tsx": "^4.19.2",

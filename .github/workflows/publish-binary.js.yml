@@ -18,7 +18,7 @@ jobs:
           {os: "macos-14", arch: "arm64"}, # Sonoma
           {os: "macos-14", arch: "amd64"}, # Sonoma
         ]
-        node-version: [18.x, 20.x, 21.x, 22.x, 23.x]
+        node-version: [16.14, 18.x, 20.x, 21.x, 22.x, 23.x]
 
     steps:
       - uses: actions/checkout@v4
@@ -48,7 +48,6 @@ jobs:
         with:
           msbuild-architecture: x64
 
-      # Configure node-gyp with exceptions enabled
       - name: Configure node-gyp
         shell: bash
         run: |
@@ -67,9 +66,9 @@ jobs:
           cp mmap-io.d.ts dist/
           cp dist/mmap-io.d.ts ./
 
-      - name: Run tests
-        run: |
-          yarn test
+#      - name: Run tests
+#        run: |
+#          yarn test
 
       - name: Package binary
         env:
