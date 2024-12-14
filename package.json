@@ -1,13 +1,13 @@
 {
     "name": "@riaskov/mmap-test-cd",
-    "version": "2.0.21",
+    "version": "2.0.22",
     "license": "MIT",
     "author": {
         "name": "Andrei Riaskov",
         "email": "code@riaskov.com"
     },
     "engines": {
-        "node": "^>=16.14.0"
+        "node": ">=16.14.0"
     },
     "binary": {
         "module_name": "mmap_io",
