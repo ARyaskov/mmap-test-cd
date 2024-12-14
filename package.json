@@ -7,7 +7,7 @@
         "email": "code@riaskov.com"
     },
     "engines": {
-        "node": "^18.17.0 || >=20.5.0"
+        "node": "^>=16.14.0"
     },
     "binary": {
         "module_name": "mmap_io",
@@ -69,7 +69,7 @@
         "@riaskov/node-pre-gyp-github": "^3.0.0",
         "@types/chai": "^5.0.1",
         "@types/mocha": "^10.0.10",
-        "@types/node": "^22.10.1",
+        "@types/node": "^16.18.122",
         "chai": "^4.5.0",
         "cpx": "^1.5.0",
         "mocha": "^10.8.2",

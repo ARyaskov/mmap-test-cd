@@ -13,12 +13,12 @@ jobs:
       max-parallel: 4
       matrix:
         build-type: [
-          {os: "windows-2019", arch: "amd64"},
-          {os: "ubuntu-22.04", arch: "amd64"},
-          {os: "macos-14", arch: "arm64"}, # Sonoma
-          {os: "macos-14", arch: "amd64"}, # Sonoma
+#          {os: "windows-2019", arch: "amd64"},
+#          {os: "ubuntu-22.04", arch: "amd64"},
+          {os: "macos-14"}, # Sonoma
+          {os: "macos-13"}, # Ventura
         ]
-        node-version: [18.17.0, 20.5.0, 21.x, 22.x, 23.x]
+        node-version: [16.14.0, 17.x, 18.x, 19.x, 20.x, 21.x, 22.x, 23.x]
 
     steps:
       - uses: actions/checkout@v4
@@ -32,7 +32,7 @@ jobs:
         run: corepack enable
 
       - name: Set Yarn Version
-        run: yarn set version 1.22.22
+        run: yarn set version 1.22.19
 
       - name: Install Global Dependencies
         run: |
