@@ -1,13 +1,13 @@
 {
-    "name": "@riaskov/mmap-test-cd",
-    "version": "2.0.27",
+    "name": "@riaskov/mmap",
+    "version": "2.0.28",
     "license": "MIT",
     "author": {
         "name": "Andrei Riaskov",
         "email": "code@riaskov.com"
     },
     "engines": {
-        "node": ">=16.14.0"
+        "node": "^18.17.0 || >=20.5.0"
     },
     "binary": {
         "module_name": "mmap_io",
@@ -31,54 +31,47 @@
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/ARyaskov/mmap-test-cd.git"
+        "url": "https://github.com/ARyaskov/mmap.git"
     },
-    "bugs": {
-        "url": "http://github.com/ARyaskov/mmap-test-cd/issues"
-    },
-    "main": "mmap-io.js",
+    "main": "./src/index.js",
+    "types": "./types/index.d.ts",
     "files": [
-        "binding.gyp",
-        "LICENSE",
-        "dist",
-        "mmap-io.d.ts",
-        "mmap-io.js",
-        "package.json",
-        "package-lock.json",
-        "README.md",
-        "src"
+        "src",
+        "types",
+        "binding.gyp"
     ],
     "scripts": {
-        "build": "yarn build-addon && yarn build-es",
+        "build": "npm run build:ts && npm run build:addon",
+        "build:ts": "tsc",
+        "build:addon": "node-pre-gyp rebuild",
         "build-es": "yarn tsc && cpx ./dist/mmap-io.d.ts ./",
         "build-addon": "yarn node-pre-gyp rebuild",
         "package-binary": "yarn node-pre-gyp package",
         "push-binary": "yarn node-pre-gyp-github publish",
         "postinstall": "npx node-pre-gyp install --fallback-to-build",
         "clean": "rimraf dist",
-        "format": "prettier --write \"src/**/*.ts\" \"test/**/*.js\" *.js *.d.ts",
+        "format": "prettier --write \"src/**/*.js\" \"test/**/*.js\" *.js *.d.ts",
         "test": "npm run build && mocha 'test/**/*.js'"
     },
-    "packageManager": "yarn@4.0.2",
     "dependencies": {
-        "@mapbox/node-pre-gyp": "1.0.11",
-        "nan": "^2.22.0",
+        "@mapbox/node-pre-gyp": "1.1.0-dev.1",
+        "nan": "2.22.0",
         "run-script-os": "1.1.6"
     },
     "devDependencies": {
-        "@riaskov/node-pre-gyp-github": "^3.0.0",
-        "@types/chai": "^5.0.1",
-        "@types/mocha": "^10.0.10",
-        "@types/node": "^16.18.122",
-        "chai": "^4.5.0",
-        "cpx": "^1.5.0",
-        "mocha": "^10.8.2",
-        "node-gyp": "^9.4.1",
-        "npx": "^10.2.2",
-        "prettier": "^3.4.2",
-        "ts-node": "^10.9.2",
-        "tsconfig-paths": "^4.2.0",
-        "tsx": "^4.19.2",
+        "@riaskov/node-pre-gyp-github": "3.0.0",
+        "@types/chai": "5.0.1",
+        "@types/mocha": "10.0.10",
+        "@types/node": "18.19.68",
+        "chai": "4.5.0",
+        "cpx": "1.5.0",
+        "mocha": "10.8.2",
+        "node-gyp": "11.0.0",
+        "npx": "10.2.2",
+        "prettier": "3.4.2",
+        "ts-node": "10.9.2",
+        "tsconfig-paths": "4.2.0",
+        "tsx": "4.19.2",
         "typescript": "5.7.2"
     }
 }

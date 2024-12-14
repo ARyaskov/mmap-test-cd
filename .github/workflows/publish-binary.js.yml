@@ -18,7 +18,7 @@ jobs:
           {os: "macos-14"}, # Sonoma
           {os: "macos-13"}, # Ventura
         ]
-        node-version: [16.14.0, 17.x, 18.x, 19.x, 20.x, 21.x, 22.x, 23.x]
+        node-version: [18.17.0, 20.5.0, 21.x, 22.x, 23.x]
 
     steps:
       - uses: actions/checkout@v4
@@ -32,9 +32,7 @@ jobs:
         run: corepack enable
 
       - name: Set Yarn Version
-        env:
-          YARN_IGNORE_NODE: 1
-        run: yarn set version 1.22.14
+        run: yarn set version 1.22.22
 
       - name: Install Global Dependencies
         run: |
