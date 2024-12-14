@@ -32,7 +32,7 @@ jobs:
         run: corepack enable
 
       - name: Set Yarn Version
-        run: yarn set version 1.22.19
+        run: yarn set version 1.22.14
 
       - name: Install Global Dependencies
         run: |
